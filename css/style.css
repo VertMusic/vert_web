@@ -2,6 +2,9 @@
 .ember-application {
     margin: 20px;
 }
+.img-responsive {
+    max-width: 88px;
+}
 
 /* Navbar links styling */
 a {
