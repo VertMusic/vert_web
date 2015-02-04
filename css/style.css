@@ -1,0 +1,51 @@
+/* Put your CSS here */
+.ember-application {
+    margin: 20px;
+}
+
+/* Navbar links styling */
+a {
+  cursor: pointer;
+}
+.active {
+  font-weight: bold;   
+}
+
+.playlist-subheading {
+    margin: 0px 0px 0px 4px;
+}
+
+/* Input Element style as h1 element for inline editing */
+.editable-field {
+  border: 1px solid #fff;
+  border-radius: 4px;
+  margin: 10px 0px 0px 0px;
+}
+h1.edit input {
+  height: 1.3em;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: inherit;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 3px #e8e8e8 inset;
+  margin-bottom: 0px;
+}
+.editable-field:hover {
+  margin-right: -2px;
+  padding-right: 2px;
+  border-color: #ccc;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -webkit-transition: box-shadow 150ms ease-in 0ms;
+  transition: box-shadow 150ms ease-in 0ms;
+}
+.edit .save-options {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 3px 6px rgba(111,111,111,0.2);
+  padding: 0px 5px 5px 5px;
+  z-index: 1;
+  position: absolute;
+}

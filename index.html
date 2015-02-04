@@ -1,13 +1,141 @@
-<!DOCTYPE HTML>
-
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>Vert Music</title>
-		<link rel="stylesheet" href="styles.css">
-		<script src="main.js"></script>
-	</head>
-
-	<body>
-		<h1>Vert Music (Under Construction)</h1>
-	</body>
+<head>
+  <meta charset="utf-8">
+  <title>Vert</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"-->
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+</head>
+<body>
+    
+  <!--
+      Main application template
+  --->
+  <script type="text/x-handlebars">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="#">Vert</a>
+        <ul class="nav">
+          {{#each}}
+          <li>{{#link-to context}} {{displayName}} {{/link-to}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+      
+    {{outlet}}
+  </script>
+    
+  <!-- 
+      Playlists navigation pane template
+  -->
+  <script type="text/x-handlebars" id="playlists">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <table class="table">
+            <thead>
+              <tr><th>Playlists</th></tr>
+            </thead>
+            {{#each}}
+              <tr><td>
+                <!-- links to specific playlist: "this" specifies which model to use -->  
+                {{#link-to 'playlist' this}}
+                  {{name}} <small class="muted">by {{author}}</small>
+                {{/link-to}}
+              </td></tr>
+            {{/each}}
+            <tr><td colspan="4"><a id="add-playlist">+ Add Playlist</a></td></tr>
+          </table>
+        </div>
+          
+        <div class="span9">
+            {{outlet}}
+        </div>
+          
+      </div>
+    </div>
+  </script>
+  
+  <!-- 
+      Single Playlist page 
+  -->
+  <script type="text/x-handlebars" id="playlist">
+    <div class="container-fluid">
+      <div class="row-fluid">
+          
+        <!-- Allows inline editing of name: This is tied to the PlaylistController -->
+        {{#if isEditing}}
+          <h1 class="edit">
+            {{focus-input type="text" value=name}}
+            <div class="save-options">
+              <button {{action 'doneEditing'}}>Done</button>
+            </div>
+          </h1>
+        {{else}}
+          <h1 {{action 'edit'}} class="editable-field" title="Click to edit">{{name}}</h1>
+        {{/if}}
+          
+        <h4 class="playlist-subheading">by {{author}}</h4>
+      <hr/>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <td>Title</td>  
+              <td>Artist</td>
+              <td>Duration</td>
+              <td>Play</td>
+            </tr>  
+          </thead>
+          <tbody>
+            <!-- TODO: Place handlebars templating for song data here -->
+            <tr><td colspan="4"><a id="add-song">+ Add Song</a></td></tr>
+          </tbody>
+        </table>
+    </div>  
+  </script>
+      
+  <!-- 
+      About page template
+  -->
+  <script type="text/x-handlebars" id="about">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <p>
+          Vert is a music storage and sharing platform. Upload songs and access them from anywhere on your computer 
+          or mobile devices. Playlists can be marked private and will only be seen by you, or share your list of tunes 
+          with the entire user community by making one public.
+        </p>
+      </div>
+    </div>
+  </script>
+    
+  <!-- 
+      Settings page template
+  -->
+  <script type="text/x-handlebars" id="settings">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <p>
+          This is the page were users can manage their account and settings. Under construction.
+        </p>
+      </div>
+    </div>
+  </script>
+      
+  <!-- example of a partial which can be used via: {{partial 'post/edit'}}
+  <script type="text/x-handlebars" id="post/edit">
+    <!-- Bound input element for direct edit to the model
+    <p>{{input type="text" value=title}}</p>
+  </script-->
+    
+  <script src="js/libs/jquery-1.10.2.js"></script>
+  <script src="js/libs/handlebars-v2.0.0.js"></script>
+  <script src="http://builds.emberjs.com/release/ember.js"></script>
+  <script src="http://builds.emberjs.com/beta/ember-data.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
 </html>
