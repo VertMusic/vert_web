@@ -5,6 +5,15 @@
 .img-responsive {
     max-width: 88px;
 }
+.center {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form input {
+ width: 65%;   
+}
 
 /* Navbar links styling */
 a {

@@ -2,35 +2,51 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Vert</title>
+  <title>Vert Music</title>
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/style.css">
-  <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"-->
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    
-  <!--
-      Main application template
-  --->
+        
+  <!--------------------------------------------
+      Main application landing page template
+  --------------------------------------------->
   <script type="text/x-handlebars">
-    <div class="navbar">
-      <div class="navbar-inner">
-        <a class="brand" href="#"><img src="image/vert_logo.png" class="img-responsive"/></a>
-        <ul class="nav">
-          {{#each}}
-          <li>{{#link-to context}} {{displayName}} {{/link-to}}</li>
-          {{/each}}
-        </ul>
+    <div class="container">
+      <div class="navbar .navbar-fixed-top">
+        {{#if session.isAuthenticated}} 
+          <span> {{session.authUser.username}} </span>
+        {{/if}}
+        <div class="navbar-inner">
+          <a class="brand" href="#"><img src="image/vert_logo.png" class="img-responsive"/></a>
+          <ul class="nav">
+            {{#if session.isAuthenticated}}
+              <li>{{#link-to 'playlists'}} Playlists {{/link-to}}</li>
+              <li>{{#link-to 'about'}} About {{/link-to}}</li>
+              <li>{{#link-to 'session.destroy'}} Logout {{/link-to}}</li>
+            {{else}}
+              <li>{{#link-to 'register'}} Register {{/link-to}}</li>
+              <li>{{#link-to 'login'}} Login {{/link-to}}</li>
+            {{/if}}
+          </ul>
+          <ul class="nav pull-right">
+            <li class="navbar-right">  
+              <form class="navbar-search">
+                <!-- this will be a twitter typeahead connected to all the playlists -->
+                <input type="text" class="search-query" placeholder="Search">
+              </form>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-      
-    {{outlet}}
+      {{outlet}}
+    </div>  
   </script>
     
-  <!-- 
+  <!-------------------------------------- 
       Playlists navigation pane template
-  -->
+  --------------------------------------->
   <script type="text/x-handlebars" id="playlists">
     <div class="container-fluid">
       <div class="row-fluid">
@@ -41,7 +57,7 @@
             </thead>
             {{#each}}
               <tr><td>
-                <!-- links to specific playlist: "this" specifies which model to use -->  
+                <!-- links to specific playlist: "this" specifies which model to use  -->
                 {{#link-to 'playlist' this}}
                   {{name}} <small class="muted">by {{author}}</small>
                 {{/link-to}}
@@ -59,14 +75,14 @@
     </div>
   </script>
   
-  <!-- 
+  <!------------------------- 
       Single Playlist page 
-  -->
+  -------------------------->
   <script type="text/x-handlebars" id="playlist">
     <div class="container-fluid">
       <div class="row-fluid">
           
-        <!-- Allows inline editing of name: This is tied to the PlaylistController -->
+        <!-- Allows inline editing of name: This is tied to the PlaylistController   -->
         {{#if isEditing}}
           <h1 class="edit">
             {{focus-input type="text" value=name}}
@@ -78,7 +94,7 @@
           <h1 {{action 'edit'}} class="editable-field" title="Click to edit">{{name}}</h1>
         {{/if}}
           
-        <h4 class="playlist-subheading">by {{author}}</h4>
+        <h4 class="playlist-subheading">by {{author}}<small class="muted">&nbsp;({{format-date date}})</small></h4>
       <hr/>
         <table class="table table-striped">
           <thead>
@@ -97,11 +113,11 @@
     </div>  
   </script>
       
-  <!-- 
+  <!------------------------ 
       About page template
-  -->
+  ------------------------->
   <script type="text/x-handlebars" id="about">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row-fluid">
         <p>
           Vert is a music storage and sharing platform. Upload songs and access them from anywhere on your computer 
@@ -112,30 +128,83 @@
     </div>
   </script>
     
-  <!-- 
-      Settings page template
-  -->
-  <script type="text/x-handlebars" id="settings">
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <p>
-          This is the page were users can manage their account and settings. Under construction.
-        </p>
-      </div>
+  <!--------------------------- 
+      Registration page template
+  ---------------------------->
+  <script type="text/x-handlebars" id="register">
+    <div class="container">
+      <!--div class="row"-->
+        <div class="span6 well center">
+          <legend>Register</legend>
+          <form {{action "createUser" this on="submit"}}>
+            <div>
+              <label>Full Name</label>
+              {{input type="text" valueBinding="name" placeholder="Full Name"}}
+            </div>
+            <div>
+              <label>Email Address</label>
+              {{input type="email" valueBinding="email" placeholder="Email Address"}}
+            </div>
+            <div>
+              <label>Username</label>
+              {{input type="text" valueBinding="username" placeholder="Username"}}
+            </div>
+            <div>
+              <label>Password</label>
+              {{input type="password" valueBinding="password" placeholder="Password"}}
+            </div>
+            <br>
+            <button {{action "reset"}} class="btn">Reset</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      <!--/div-->
+    </div>
+  </script>
+
+  <!-----------------------
+      Login page template
+  ------------------------->
+  <script type="text/x-handlebars" id="login">
+    <div class="container">
+      <div class="row">
+		<div class="span4 center well">
+          <legend>Please Sign In</legend>
+            {{#if loginFailed}}
+              <div class="alert alert-error">
+                Incorrect Username or Password!
+              </div>
+            {{/if}}
+            <form {{action 'login' this on="submit"}}>
+			  {{input valueBinding="username" class="span4" type="text" placeholder="Username"}}
+			  {{input valueBinding="password" class="span4" type="password" placeholder="Password"}}
+              <label class="checkbox">
+                {{input type="checkbox" checked=remember class="toggle"}} Remember Me
+              </label>
+              </br>
+			  <button type="submit" name="submit" class="btn btn-primary btn-block">Sign in</button>
+                <a {{action "forgotPassword"}}>Forgot Password?</a>
+			</form>    
+		</div>
+	  </div>
     </div>
   </script>
       
-  <!-- example of a partial which can be used via: {{partial 'post/edit'}}
-  <script type="text/x-handlebars" id="post/edit">
-    <!-- Bound input element for direct edit to the model
-    <p>{{input type="text" value=title}}</p>
-  </script-->
-    
-  <script src="js/libs/jquery-1.10.2.js"></script>
-  <script src="js/libs/handlebars-v2.0.0.js"></script>
-  <script src="http://builds.emberjs.com/release/ember.js"></script>
+  <!-- External libraries. NOTE: Order matters here -->
+  <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="js/third-party/jquery.cookie.js"></script>
+  <script src="js/third-party/handlebars-v2.0.0.js"></script>
+  <script src="js/third-party/ember-1.9.1.js"></script>
   <script src="http://builds.emberjs.com/beta/ember-data.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js"></script>
-  <script src="js/app.js"></script>
+  
+  <!-- Vert library files. NOTE Order matters here -->
+  <script src="js/lib/initializer.js"></script>
+  <script src="js/lib/adapter.js"></script>
+  <script src="js/lib/route.js"></script>
+  <script src="js/lib/controller.js"></script>
+  <script src="js/lib/model.js"></script>
+  <script src="js/lib/component.js"></script>
+  
 </body>
 </html>
