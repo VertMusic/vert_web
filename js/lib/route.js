@@ -24,7 +24,7 @@ App.Router.map(function () {
     
     /** Playlists provides us with nested contents, where we can navigate to all the different playlists **/
     this.resource("playlists", function () {
-        this.resource("playlist", {path: ":playlist_id"});
+        this.resource("playlist", {path: "/:playlist_id"});
     });
 });
 

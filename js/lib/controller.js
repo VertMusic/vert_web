@@ -6,6 +6,50 @@ App.ApplicationController = Ember.Controller.extend({
     ///Place any logic that belongs on the main landing (index) page here
 });
 
+App.PlaylistsController = Ember.ArrayController.extend({
+    isAddingPlaylist: false,
+    actions : {
+        addNew: function() {
+            // 'Add Playlist' is triggered
+            window.console.log("Adding new playlist...");
+            this.set('isAdding', true);
+        },
+        saveNew: function() {
+            var self = this;
+            self.set('isAdding', false);
+            
+            ///Get name of playlist to be added, return if the name is empty string
+            var playlistName = self.get('playlistName');
+            if (!playlistName.trim()) { return; }
+            
+            ///Create date of creation
+            var date = new Date();
+            var dateString = moment().format("MM-DD-YYYY HH:mm");
+            
+            window.console.log("New playlist being created: name:" + playlistName + ", date:" + dateString +", author:" + this.session.get("authUser.username"));
+            
+            ///Create new playlist record
+            var playlist = this.store.createRecord("playlist", {
+                name: playlistName,
+                author: this.session.get("authUser.username"),
+                date: dateString
+            });
+            
+            ///Clear DOM field
+            self.set("playlistName","");
+            
+            ///Save new playlist then navigate to its page
+            playlist.save().then(function(newPlaylist){
+                window.console.log("New playlist '" + newPlaylist.get("name") + "' created successfully...");
+                
+                ///Navigate to new page (Scroll to top incase of a long page)
+                window.scrollTo(0,0);
+                self.transitionToRoute("playlist", newPlaylist);
+            });
+        }
+    }
+});
+
 App.PlaylistController = Ember.ObjectController.extend({
     isEditing: false,
     actions: {
@@ -18,11 +62,10 @@ App.PlaylistController = Ember.ObjectController.extend({
             window.console.log("Done editing playlist title...");
             this.set('isEditing', false);
             
-            ///TODO implement ability to update/create playlists on server:
-            //this.store.find('playlist', this.get('id')).then(function(playlist) {
-            //    /// Peform PUT to /playlists/<id> to update data on server
-            //    playlist.save();
-            //});
+            ///Update the new model on the server.
+            this.model.save().then(function(playlist){
+                window.console.log("Playlist updated");
+            });
         }
     }
 });

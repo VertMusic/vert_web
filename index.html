@@ -14,7 +14,7 @@
   --------------------------------------------->
   <script type="text/x-handlebars">
     <div class="container">
-      <div class="navbar .navbar-fixed-top">
+      <div class="navbar navbar-fixed-top span9 center">
         {{#if session.isAuthenticated}} 
           <span> {{session.authUser.username}} </span>
         {{/if}}
@@ -63,7 +63,15 @@
                 {{/link-to}}
               </td></tr>
             {{/each}}
-            <tr><td colspan="4"><a id="add-playlist">+ Add Playlist</a></td></tr>
+              
+            {{#if isAdding}}
+              <tr><td colspan="4">
+                {{focus-input type="text" value=playlistName action="saveNew"}}
+                <button class="btn btn-primary" {{action "saveNew"}}>Add</button>
+              </td></tr>
+            {{else}}
+              <tr><td colspan="4"><a id="add-playlist" {{action "addNew"}}>+ Add Playlist</a></td></tr>
+            {{/if}}
           </table>
         </div>
           
@@ -85,10 +93,8 @@
         <!-- Allows inline editing of name: This is tied to the PlaylistController   -->
         {{#if isEditing}}
           <h1 class="edit">
-            {{focus-input type="text" value=name}}
-            <div class="save-options">
-              <button {{action 'doneEditing'}}>Done</button>
-            </div>
+            {{focus-input type="text" value=name action="doneEditing"}}
+            <button class="btn btn-primary float-right" {{action 'doneEditing'}}>Done</button>
           </h1>
         {{else}}
           <h1 {{action 'edit'}} class="editable-field" title="Click to edit">{{name}}</h1>

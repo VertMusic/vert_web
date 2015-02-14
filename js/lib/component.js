@@ -13,6 +13,5 @@ App.FocusInputComponent = Ember.TextField.extend({
 /** <!--small class="muted">&nbsp;({{format-date date}})</small--> **/
 Ember.Handlebars.helper("format-date", function(date) {
     /** Creates relative date (e.g. 1 week ago) **/
-    window.console.log("Handlebar date formating...");
     return moment(date).fromNow();
 });
