@@ -3,15 +3,26 @@
 <head>
   <meta charset="utf-8">
   <title>Vert Music</title>
+  
+  <script src="http://code.jquery.com/jquery-2.1.0.js"></script>
+  <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"></script>
+  <script src="http://builds.emberjs.com/tags/v1.8.1/ember.js"></script>
+  <script src="http://getbootstrap.com/dist/js/bootstrap.js"></script>
+  <script src="assets/js/bootstrap-transition.js"></script>
+  <script src="assets/js/bootstrap-modal.js"></script>
+  
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  
 </head>
-<body>
-        
-  <!--------------------------------------------
-      Main application landing page template
-  --------------------------------------------->
+<body>   
+ 
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                             MAIN APPLICATION/PAGE TEMPLATE
+--------------------------------------------------------------------------------------------------------------------------------------------------------------->
+  
   <script type="text/x-handlebars">
     <div class="container">
       <div class="navbar navbar-fixed-top span9 center">
@@ -43,10 +54,11 @@
       {{outlet}}
     </div>  
   </script>
-    
-  <!-------------------------------------- 
-      Playlists navigation pane template
-  --------------------------------------->
+  
+<!-------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+                                                                PLAYLISTS NAVIGATION TEMPLATE
+--------------------------------------------------------------------------------------------------------------------------------------------------------------->
+  
   <script type="text/x-handlebars" id="playlists">
     <div class="container-fluid">
       <div class="row-fluid">
@@ -62,8 +74,7 @@
                   {{name}} <small class="muted">by {{author}}</small>
                 {{/link-to}}
               </td></tr>
-            {{/each}}
-              
+            {{/each}}           
             {{#if isAdding}}
               <tr><td colspan="4">
                 {{focus-input type="text" value=playlistName action="saveNew"}}
@@ -73,23 +84,21 @@
               <tr><td colspan="4"><a id="add-playlist" {{action "addNew"}}>+ Add Playlist</a></td></tr>
             {{/if}}
           </table>
-        </div>
-          
+        </div>      
         <div class="span9">
             {{outlet}}
-        </div>
-          
+        </div>     
       </div>
     </div>
   </script>
   
-  <!------------------------- 
-      Single Playlist page 
-  -------------------------->
+<!-------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+                                                                  SINGLE PLAYLIST PAGE TEMPLATE 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------->
+  
   <script type="text/x-handlebars" id="playlist">
     <div class="container-fluid">
-      <div class="row-fluid">
-          
+      <div class="row-fluid">         
         <!-- Allows inline editing of name: This is tied to the PlaylistController   -->
         {{#if isEditing}}
           <h1 class="edit">
@@ -99,7 +108,6 @@
         {{else}}
           <h1 {{action 'edit'}} class="editable-field" title="Click to edit">{{name}}</h1>
         {{/if}}
-          
         <h4 class="playlist-subheading">by {{author}}<small class="muted">&nbsp;({{format-date date}})</small></h4>
       <hr/>
         <table class="table table-striped">
@@ -113,15 +121,49 @@
           </thead>
           <tbody>
             <!-- TODO: Place handlebars templating for song data here -->
-            <tr><td colspan="4"><a id="add-song">+ Add Song</a></td></tr>
+            <tr>
+				<td colspan="4">
+					<a id="add-playlist" {{action 'showModal' 'addSong-modal' model}}>+ Add Song</a>
+					 {{outlet}}
+                     {{outlet 'modal'}}
+				</td>
+			</tr>
           </tbody>
         </table>
-    </div>  
+    </div> 
+  </script> 
+    <script type="text/x-handlebars" data-template-name="addSong-modal">
+	{{#my-modal title='Adding a Song' ok='removeModal' }}
+		<form {{action 'ok' on='submit' target=view}}>
+			<div class="form-group">
+				<label>SELECT YOUR SONG:</label>
+					<input type="submit" value="Browse"> {{input class="form-control" value=song}}		
+			</div>
+		</form>
+	{{/my-modal}}
+  </script>	
+    <script type="text/x-handlebars" data-template-name="components/my-modal">
+	<div class="modal-fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Add a Song</h4>
+				</div>
+				<div class="modal-body">
+					{{yield}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" {{action 'ok'}}>OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
   </script>
-      
-  <!------------------------ 
-      About page template
-  ------------------------->
+
+<!-------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+                                                                       ABOUT PAGE TEMPLATE
+--------------------------------------------------------------------------------------------------------------------------------------------------------------->
+  
   <script type="text/x-handlebars" id="about">
     <div class="container">
       <div class="row-fluid">
@@ -134,9 +176,10 @@
     </div>
   </script>
     
-  <!--------------------------- 
-      Registration page template
-  ---------------------------->
+<!-------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+                                                                    REGISTRATION PAGE TEMPLATE
+--------------------------------------------------------------------------------------------------------------------------------------------------------------->
+  
   <script type="text/x-handlebars" id="register">
     <div class="container">
       <!--div class="row"-->
@@ -168,9 +211,10 @@
     </div>
   </script>
 
-  <!-----------------------
-      Login page template
-  ------------------------->
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                        LOGIN PAGE TEMPLATE
+--------------------------------------------------------------------------------------------------------------------------------------------------------------->
+  
   <script type="text/x-handlebars" id="login">
     <div class="container">
       <div class="row">
@@ -195,7 +239,11 @@
 	  </div>
     </div>
   </script>
-      
+  
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                   LIBRARIES/FILES
+--------------------------------------------------------------------------------------------------------------------------------------------------------------->  
+  
   <!-- External libraries. NOTE: Order matters here -->
   <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
   <script src="js/third-party/jquery.cookie.js"></script>
@@ -211,6 +259,8 @@
   <script src="js/lib/controller.js"></script>
   <script src="js/lib/model.js"></script>
   <script src="js/lib/component.js"></script>
+  
+  
   
 </body>
 </html>

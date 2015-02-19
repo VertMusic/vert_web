@@ -95,3 +95,22 @@ App.SessionDestroyRoute =  App.AuthenticatedRoute.extend({
         controller.logout();
     }
 });
+/*OPEN/CLOSE SINGLE PLAYLSIT MODAL*/
+App.ApplicationRoute = Ember.Route.extend({
+  actions: {
+    showModal: function(name, model) {
+      this.render(name, {
+        into: 'playlist',
+        outlet: 'modal',
+        model: model
+      });
+    },
+    removeModal: function() {
+      return this.disconnectOutlet({
+        outlet: 'modal',
+        parentView: 'playlist'
+      });
+    }
+  }
+});
+/* *****************************************/
