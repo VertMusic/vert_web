@@ -4,16 +4,15 @@
   <meta charset="utf-8">
   <title>Vert Music</title>
   
-  <script src="http://code.jquery.com/jquery-2.1.0.js"></script>
+  <!--script src="http://code.jquery.com/jquery-2.1.0.js"></script>
   <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"></script>
   <script src="http://builds.emberjs.com/tags/v1.8.1/ember.js"></script>
   <script src="http://getbootstrap.com/dist/js/bootstrap.js"></script>
   <script src="assets/js/bootstrap-transition.js"></script>
-  <script src="assets/js/bootstrap-modal.js"></script>
+  <script src="assets/js/bootstrap-modal.js"></script-->
   
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-  <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
   
 </head>
@@ -24,35 +23,34 @@
 --------------------------------------------------------------------------------------------------------------------------------------------------------------->
   
   <script type="text/x-handlebars">
-    <div class="container">
-      <div class="navbar navbar-fixed-top span9 center">
-        {{#if session.isAuthenticated}} 
-          <span> {{session.authUser.username}} </span>
-        {{/if}}
-        <div class="navbar-inner">
-          <a class="brand" href="#"><img src="image/vert_logo.png" class="img-responsive"/></a>
-          <ul class="nav">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#"><img alt="Vert" src="image/vert_logo.png" class="img-responsive"/></a>
+        </div>
+          <ul class="nav navbar-nav navbar-right">
             {{#if session.isAuthenticated}}
               <li>{{#link-to 'playlists'}} Playlists {{/link-to}}</li>
-              <li>{{#link-to 'about'}} About {{/link-to}}</li>
-              <li>{{#link-to 'session.destroy'}} Logout {{/link-to}}</li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  {{session.authUser.username}} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Settings</a></li>
+                  <li>{{#link-to 'about'}} About {{/link-to}}</li>
+                  <li><a href="#">Help</a></li>
+                  <li class="divider"></li>
+                  <li>{{#link-to 'session.destroy'}} Logout {{/link-to}}</li>
+                </ul>
+              </li>
             {{else}}
               <li>{{#link-to 'register'}} Register {{/link-to}}</li>
               <li>{{#link-to 'login'}} Login {{/link-to}}</li>
             {{/if}}
           </ul>
-          <ul class="nav pull-right">
-            <li class="navbar-right">  
-              <form class="navbar-search">
-                <!-- this will be a twitter typeahead connected to all the playlists -->
-                <input type="text" class="search-query" placeholder="Search">
-              </form>
-            </li>
-          </ul>
-        </div>
       </div>
-      {{outlet}}
-    </div>  
+    </nav>
+    {{outlet}}    
   </script>
   
 <!-------------------------------------------------------------------------------------------------------------------------------------------------------------- 
@@ -247,6 +245,7 @@
   <!-- External libraries. NOTE: Order matters here -->
   <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
   <script src="js/third-party/jquery.cookie.js"></script>
+    <script src="js/third-party/bootstrap.min.js"></script>
   <script src="js/third-party/handlebars-v2.0.0.js"></script>
   <script src="js/third-party/ember-1.9.1.js"></script>
   <script src="http://builds.emberjs.com/beta/ember-data.js"></script>
@@ -259,8 +258,6 @@
   <script src="js/lib/controller.js"></script>
   <script src="js/lib/model.js"></script>
   <script src="js/lib/component.js"></script>
-  
-  
   
 </body>
 </html>
