@@ -100,7 +100,7 @@ App.ApplicationRoute = Ember.Route.extend({
   actions: {
     showModal: function(name, model) {
       this.render(name, {
-        into: 'playlist',
+        into: 'application',
         outlet: 'modal',
         model: model
       });
@@ -108,7 +108,7 @@ App.ApplicationRoute = Ember.Route.extend({
     removeModal: function() {
       return this.disconnectOutlet({
         outlet: 'modal',
-        parentView: 'playlist'
+        parentView: 'application'
       });
     }
   }

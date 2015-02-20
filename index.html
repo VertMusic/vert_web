@@ -50,7 +50,8 @@
           </ul>
       </div>
     </nav>
-    {{outlet}}    
+    {{outlet}}
+    {{outlet 'modal'}}
   </script>
   
 <!-------------------------------------------------------------------------------------------------------------------------------------------------------------- 
@@ -121,37 +122,39 @@
             <!-- TODO: Place handlebars templating for song data here -->
             <tr>
 				<td colspan="4">
-					<a id="add-playlist" {{action 'showModal' 'addSong-modal' model}}>+ Add Song</a>
-					 {{outlet}}
-                     {{outlet 'modal'}}
+					<a id="add-playlist" {{action 'showModal' 'song-modal' model}}>+ Add Song</a>
 				</td>
 			</tr>
           </tbody>
         </table>
     </div> 
   </script> 
-    <script type="text/x-handlebars" data-template-name="addSong-modal">
-	{{#my-modal title='Adding a Song' ok='removeModal' }}
+      
+  <script type="text/x-handlebars" data-template-name="song-modal">
+	{{#my-modal title='Adding a Song' ok='save' close='removeModal' }}
 		<form {{action 'ok' on='submit' target=view}}>
 			<div class="form-group">
 				<label>SELECT YOUR SONG:</label>
-					<input type="submit" value="Browse"> {{input class="form-control" value=song}}		
+				{{input class="form-control" value=song}}		
 			</div>
 		</form>
 	{{/my-modal}}
   </script>	
-    <script type="text/x-handlebars" data-template-name="components/my-modal">
-	<div class="modal-fade">
+      
+  <script type="text/x-handlebars" data-template-name="components/my-modal">
+	<div class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Add a Song</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">{{title}}</h4>
 				</div>
 				<div class="modal-body">
 					{{yield}}
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" {{action 'ok'}}>OK</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" {{action 'ok'}}>Save</button>
 				</div>
 			</div>
 		</div>

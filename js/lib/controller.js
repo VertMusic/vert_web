@@ -49,6 +49,7 @@ App.PlaylistsController = Ember.ArrayController.extend({
         }
     }
 });
+
 App.PlaylistController = Ember.ObjectController.extend({
     isEditing: false,
     actions: {
@@ -56,8 +57,7 @@ App.PlaylistController = Ember.ObjectController.extend({
             // Edit action is triggered - causes input element to be rendered after 'isEditing' is set.
             this.set('isEditing', true);
             window.console.log("Editing playlist title...");
-		}
-        },
+		},
         doneEditing: function() {
             window.console.log("Done editing playlist title...");
             this.set('isEditing', false);
@@ -66,18 +66,17 @@ App.PlaylistController = Ember.ObjectController.extend({
             this.model.save().then(function(playlist){
                 window.console.log("Playlist updated");
             });
-        },	
+        }
+    }
 });
-//======USED FOR THE OK AND BROWSE BUTTON. CURRENTLY DOES NOTHING EXCEPT EXITING
-App.MyModalComponent = Ember.Component.extend({
+App.SongModalController = Ember.ObjectController.extend({
   actions: {
-    ok: function() {
-      this.$('playlist').modal('hide');
-      this.sendAction('ok');
+    save: function() {
+      alert("Save is not yet implemented...");
     }
   }
 });
-//=========================================================
+
 App.RegisterController = Ember.ObjectController.extend({
     name: null,
     email: null,
