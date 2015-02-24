@@ -49,7 +49,6 @@ App.PlaylistsController = Ember.ArrayController.extend({
         }
     }
 });
-
 App.PlaylistController = Ember.ObjectController.extend({
     isEditing: false,
     actions: {
@@ -57,7 +56,8 @@ App.PlaylistController = Ember.ObjectController.extend({
             // Edit action is triggered - causes input element to be rendered after 'isEditing' is set.
             this.set('isEditing', true);
             window.console.log("Editing playlist title...");
-		},
+		}
+        },
         doneEditing: function() {
             window.console.log("Done editing playlist title...");
             this.set('isEditing', false);
@@ -66,17 +66,24 @@ App.PlaylistController = Ember.ObjectController.extend({
             this.model.save().then(function(playlist){
                 window.console.log("Playlist updated");
             });
-        }
-    }
+        },	
 });
-App.SongModalController = Ember.ObjectController.extend({
+//======USED FOR THE OK AND BROWSE BUTTON. CURRENTLY DOES NOTHING EXCEPT EXITING
+App.MyModalComponent = Ember.Component.extend({
   actions: {
-    save: function() {
-      alert("Save is not yet implemented...");
+    ok: function() {
+      this.$('playlist').modal('hide');
+      this.sendAction('ok');
+    },
+	forgot: function() {
+      this.$('login').modal('hide');
+      this.sendAction('forgot');
+	  document.getElementById("sending").style.visibility='visible';
+	  document.getElementById("saving").style.visibility='hidden';
     }
   }
 });
-
+//=========================================================
 App.RegisterController = Ember.ObjectController.extend({
     name: null,
     email: null,
@@ -103,11 +110,11 @@ App.RegisterController = Ember.ObjectController.extend({
             } else {
                 window.console.log("ERROR: There are missing fields in the registration form!");   
             }
-        },
-        
-        reset: function() {
+        },     
+        reset: function() {	
             ///TODO: Clear all fields
-            alert("Not implemented - Clearing form...");
+			document.getElementById("registration").reset();
+			//var newData = self.setProperties("name" = null, "email" = null, "username" = null, "password" = null);	
         }
     }
 });
@@ -167,6 +174,14 @@ App.LoginController = Ember.Controller.extend({
         },
         
         forgotPassword: function() {
+			window.open('mailto:test@example.com');
+		
+		
+		
+		
+		
+	
+		
             ///TODO: Send password to user's email account
             alert("Not implemented - Sending password to your email...");
         },
@@ -184,7 +199,7 @@ App.LoginController = Ember.Controller.extend({
 
 App.SessionDestroyController = Ember.Controller.extend({
     logout: function() {
-        ///This removes our sessesion and triggers the removal of cookies as well
+        ///This removes our session and triggers the removal of cookies as well
         window.console.log("Logging out...");
         this.session.setProperties({
             authToken:  '',
