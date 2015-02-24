@@ -1,0 +1,158 @@
+/* Links */
+/*
+#cover a,
+#cover a:focus,
+#cover a:hover {
+    color: #fff;
+}
+*/
+
+/* Custom default button */
+/*
+#cover #content .btn-default {
+    color: #333;
+    text-shadow: none;
+    background-color: #fff;
+    border: 1px solid #fff;
+}
+*/
+
+
+/**************************/
+/*     Base structure     */
+/**************************/
+#cover.site-wrapper {
+    background-color: #333;
+    display: table;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
+#cover.site-wrapper-inner {
+    display: table-cell;
+    vertical-align: top;
+}
+#cover .cover-container {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* Padding for spacing */
+#cover .cover.inner {
+    margin-top: 80px;   
+}
+#cover .inner {
+    padding: 5px 20px;
+}
+
+
+/***************************/
+/*         Header          */
+/***************************/
+#cover .masthead-brand {
+    margin-top: 7px;
+    margin-bottom: 10px;
+    font-size: 36px;
+    color: rgb(158, 202, 59);
+    font-weight: bold;
+    font-variant: small-caps;
+}
+#cover .masthead-brand i {
+    margin-right: 10px;
+    color: #fff;
+}
+
+#cover .masthead-nav > li {
+    display: inline-block;
+}
+#cover .masthead-nav > li + li {
+    margin-left: 20px;
+}
+#cover .masthead-nav > li > a {
+    padding-right: 0;
+    padding-left: 0;
+    font-size: 16px;
+    font-weight: bold;
+    height: 38px;
+    color: #fff; /* IE8 proofing */
+    color: rgba(255,255,255,.75);
+    border-bottom: 2px solid transparent;
+}
+#cover .masthead-nav > li > a:hover,
+#cover .masthead-nav > li > a:focus {
+    background-color: transparent;
+    border-bottom-color: #a9a9a9;
+    border-bottom-color: rgba(255,255,255,.25);
+}
+#cover .masthead-nav > .active > a,
+#cover .masthead-nav > .active > a:hover,
+#cover .masthead-nav > .active > a:focus {
+    color: #fff;
+    border-bottom-color: rgb(158, 202, 59);
+    border-bottom-width: 3px;
+}
+
+@media (min-width: 768px) {
+    #cover .masthead-brand {
+        float: left;
+        margin-left: -5px;
+    }
+    #cover .masthead-nav {
+        float: right;
+        margin-top: 2px;
+    }
+}
+
+
+/***************************/
+/*          Cover          */
+/***************************/
+#cover .cover {
+    padding: 0 20px;
+}
+#cover .cover .btn-lg {
+    padding: 10px 20px;
+    text-shadow: none;
+}
+
+
+/****************************/
+/*         Footer           */
+/****************************/
+#cover .mastfoot {
+    color: rgba(255,255,255,.5);
+    position: fixed;
+    bottom: 0px;
+}
+
+
+/*****************************/
+/*     Center and Media      */
+/*****************************/
+#cover .masthead,
+#cover .mastfoot,
+#cover .cover-container {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    #cover .masthead {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 62px;
+        background-color: rgb(81,81,81);
+    }
+    #cover .mastfoot {
+        position: fixed;
+        bottom: 0;
+        right: 5px;
+    }
+    #cover .site-wrapper-inner {
+        vertical-align: middle;
+    }
+}
+

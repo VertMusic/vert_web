@@ -7,19 +7,11 @@ App.Router.map(function () {
     this.resource("login");
     
     /// TODO: eventually created a nested resource and combine with 'login' (This may cause 'action' issue in controller, so holding off)
-    //this.resource("session", function(){
-    //    this.resource("create");
-    //    this.route("destroy");
-    //});
     this.resource("session", function(){
         this.route("destroy");
     });
     
     /// TODO: created nested 'user' resource, where 'new' is 'register' and add 'edit' resource.
-    //this.resource("user", function(){
-    //    this.resource("new");
-    //    this.resource("edit", {path: ":user_id"});
-    //});
     this.resource("register");
     
     /** Playlists provides us with nested contents, where we can navigate to all the different playlists **/
@@ -48,7 +40,6 @@ App.AuthenticatedRoute = Ember.Route.extend({
 
 /** Can enter Vert index page for login and registration and info **/
 App.ApplicationRoute = Ember.Route.extend({
-    ///Initialize Auth Manager
     init: function() {
         if (!this.get("session.authUserId")) {
             window.console.log("Starting application (No user session defined)...");
@@ -64,7 +55,10 @@ App.PlaylistsRoute =  App.AuthenticatedRoute.extend({
         /// Returns list of 'playlists' items (just their information (not the songs)
         /// Makes GET request to: <host><namespace>/playlists
         return this.store.find("playlist");
-    }
+    },
+    renderTemplate: function() {
+        this.render({ outlet: 'playlists' });
+      }
 });
 
 /** Can't access a sepcific playlist until authenticated **/
@@ -80,12 +74,23 @@ App.PlaylistRoute =  App.AuthenticatedRoute.extend({
 App.RegisterRoute = Ember.Route.extend({
     model: function() {
         return this.store.createRecord('user');
+    },
+    renderTemplate: function(controller, model) {
+        /// Render the `register` template into the outlet `notAuth`
+        this.render('register', {
+              outlet: 'notAuth'
+        });
     }
 });
 
 /** You can login without being authenticated **/
 App.LoginRoute = Ember.Route.extend({
-    
+    renderTemplate: function(controller, model) {
+        /// Render the `login` template into the outlet `notAuth`
+        this.render('login', {
+              outlet: 'notAuth'
+        });
+    }
 });
 
 /** You can't log out unless you are authenticated **/

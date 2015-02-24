@@ -1,7 +1,7 @@
 /* Put your CSS here */
 .ember-application {
-    margin: 20px;
-    margin-top: 75px;
+    height:100%;
+    background-color: #333;
 }
 .img-responsive {
     max-width: 88px;
@@ -17,9 +17,6 @@
     margin-top: 3px;
 }
 
-form input {
- width: 65%;   
-}
 
 /* Navbar links styling */
 a {
@@ -66,4 +63,9 @@ h1.edit input {
   padding: 0px 5px 5px 5px;
   z-index: 1;
   position: absolute;
+}
+
+
+#playlist-container {
+    margin-top: 60px;   
 }

@@ -3,7 +3,39 @@
 /********************************************************************************/
 
 App.ApplicationController = Ember.Controller.extend({
-    ///Place any logic that belongs on the main landing (index) page here
+    
+    isIndex: (function() {
+        window.console.log("Current route: "+this.get("currentRouteName"));
+        return this.get("currentRouteName") == "index";
+    }).property("currentRouteName"),
+    
+    actions : {
+        toggleOptionsMenu: function() {            
+            ///Toggle css class to open or close options menu
+            $('#optionsMenu').toggleClass('open');
+            
+            ///Close options menu when option is clicked
+            $('#optionsMenu a').on('click', function() { 
+                $('#optionsMenu .navbar-toggler').trigger('click'); 
+            });
+        },
+        togglePlaylistMenu: function() {
+            
+            ///Route to the playlist controller
+            this.transitionToRoute("playlists");
+            
+            ///Toggle css classes to open playlist menu
+            $('#playlistToggle').toggleClass('open');
+		    $('#wrapper').toggleClass('toggled');
+            
+            ///Set listener on meu items for select: 
+            ///TODO can be removed after adding {{#link-to}}, then alse change '.higlight' to '.active' in css file
+            $('.list-group-item').click(function() {
+                $('.list-group-item').removeClass('highlight');
+                $(this).addClass('highlight');
+            });
+        }
+    }
 });
 
 App.PlaylistsController = Ember.ArrayController.extend({
@@ -98,7 +130,10 @@ App.RegisterController = Ember.ObjectController.extend({
                     window.console.log("New user created: " + user.get('accessToken'));
                     self.set("session.authToken", user.get("accessToken"));
                     self.set("session.authUserId", user.get("id"));
-                    self.transitionToRoute("index");
+                    
+                    ///TODO:  this styling differently
+                    $(".ember-application").css({ "background-color": '#fff'});
+                    self.transitionToRoute("playlists");
                 });
             } else {
                 window.console.log("ERROR: There are missing fields in the registration form!");   
@@ -149,7 +184,9 @@ App.LoginController = Ember.Controller.extend({
                             attemptedTransition.retry();
                             self.session.set('attemptedTransition', null);
                         } else {
-                            self.transitionToRoute('index');
+                            ///TODO:  this styling differently
+                            $(".ember-application").css({ "background-color": '#fff'});
+                            self.transitionToRoute('playlists');
                         }
                     },
                     function(failure) {
@@ -190,6 +227,6 @@ App.SessionDestroyController = Ember.Controller.extend({
             authToken:  '',
             authUserId: ''
         });
-        this.transitionToRoute('login');
+        this.transitionToRoute('index');
     }
 });

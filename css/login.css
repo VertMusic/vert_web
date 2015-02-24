@@ -1,0 +1,161 @@
+.wrap {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+@media (min-width: 768px) {
+    .form-wrapper {
+        margin-top: 10px;
+    }
+}
+
+.form-wrapper {
+    background-color: rgb(158, 202, 59);
+    background-color: rgba(158, 202, 59, .7);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.form-wrapper ::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #ddd;
+}
+.form-wrapper :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #ddd;
+   opacity:  1;
+}
+.form-wrapper ::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #ddd;
+   opacity:  1;
+}
+.form-wrapper :-ms-input-placeholder { /* Internet Explorer 10+ */
+   color:    #ddd;
+}
+
+p.form-title {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    color: #FFFFFF;
+    letter-spacing: 4px;
+}
+
+form.login input[type="text"],
+form.login input[type="email"],
+form.login input[type="password"] {
+    width: 100%;
+    margin: 0;
+    padding: 5px 10px;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid #FFFFFF;
+    outline: 0;
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    color: #FFFFFF;
+    outline: 0;
+}
+
+form.login input[type="submit"] {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 16px;
+    outline: 0;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+form.login input[type="submit"]:hover {
+    transition: background-color 0.5s ease;
+}
+
+.alert-container,
+.alert-container .alert {
+    text-shadow: none;
+    padding: 0px;
+    margin-bottom: 10px;
+}
+
+form.login .remember-forgot,
+form.login .remember-forgot .btn {
+    width: 100%;
+    margin: 10px 0 0 0;
+}
+form.login .forgot-pass-content {
+    min-height: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+form.login label, form.login a {
+    font-size: 12px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+
+.pr-wrap {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.show-pass-reset {
+    display: block !important;
+}
+
+.pass-reset {
+    margin: 0 auto;
+    width: 250px;
+    position: relative;
+    margin-top: 22%;
+    padding: 20px 15px;
+}
+
+.pass-reset label {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.pass-reset input[type="email"] {
+    width: 100%;
+    margin: 5px 0 0 0;
+    padding: 5px 10px;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid #000000;
+    outline: 0;
+    font-style: italic;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    color: #000000;
+    outline: 0;
+}
+
+.pass-reset input[type="submit"] {
+    width: 100%;
+    border: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 10px;
+    outline: 0;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+.pass-reset input[type="submit"]:hover {
+    transition: background-color 0.5s ease;
+}
