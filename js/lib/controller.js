@@ -126,9 +126,12 @@ App.RegisterController = Ember.ObjectController.extend({
             }
         },     
         reset: function() {	
-            ///TODO: Clear all fields
-			document.getElementById("registration").reset();
-			//var newData = self.setProperties("name" = null, "email" = null, "username" = null, "password" = null);	
+            ///Clear all registration fields
+			this.setProperties({
+                "name":"", 
+                "email":"", 
+                "username":"", 
+                "password":""});	
         }
     }
 });
