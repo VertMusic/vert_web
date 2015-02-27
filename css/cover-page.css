@@ -1,27 +1,8 @@
-/* Links */
-/*
-#cover a,
-#cover a:focus,
-#cover a:hover {
-    color: #fff;
-}
-*/
-
-/* Custom default button */
-/*
-#cover #content .btn-default {
-    color: #333;
-    text-shadow: none;
-    background-color: #fff;
-    border: 1px solid #fff;
-}
-*/
-
-
 /**************************/
 /*     Base structure     */
 /**************************/
 #cover.site-wrapper {
+    position: absolute;
     background-color: #333;
     display: table;
     width: 100%;
@@ -74,6 +55,7 @@
 #cover .masthead-nav > li > a {
     padding-right: 0;
     padding-left: 0;
+    cursor: pointer;
     font-size: 16px;
     font-weight: bold;
     height: 38px;

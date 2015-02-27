@@ -14,8 +14,7 @@
 }
 
 .form-wrapper {
-    background-color: rgb(158, 202, 59);
-    background-color: rgba(158, 202, 59, .7);
+    border: 3px solid rgba(158, 202, 59, .7);
     border-radius: 8px;
     padding: 20px;
 }

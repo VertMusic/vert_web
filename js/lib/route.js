@@ -46,6 +46,26 @@ App.ApplicationRoute = Ember.Route.extend({
         } else {
             window.console.log("Starting application for user session: " + this.session.get("authUserId") + "...");
         }
+    },
+    actions: {
+        showModal: function(name, model) {
+          this.render(name, {
+            into: 'application',
+            outlet: 'modal',
+            model: model
+          });
+        },
+        removeModal: function() {
+          return this.disconnectOutlet({
+            outlet: 'modal',
+            parentView: 'application'
+          });
+        }
+    }, 
+    redirect: function() {
+        if (this.get("session.authUserId")) {
+            this.transitionTo('playlists');
+        }
     }
 });
 
@@ -100,22 +120,3 @@ App.SessionDestroyRoute =  App.AuthenticatedRoute.extend({
         controller.logout();
     }
 });
-/*OPEN/CLOSE SINGLE PLAYLSIT MODAL*/
-App.ApplicationRoute = Ember.Route.extend({
-  actions: {
-    showModal: function(name, model) {
-      this.render(name, {
-        into: 'application',
-        outlet: 'modal',
-        model: model
-      });
-    },
-    removeModal: function() {
-      return this.disconnectOutlet({
-        outlet: 'modal',
-        parentView: 'application'
-      });
-    }
-  }
-});
-/* *****************************************/

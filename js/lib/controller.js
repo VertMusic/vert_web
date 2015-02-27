@@ -21,9 +21,6 @@ App.ApplicationController = Ember.Controller.extend({
         },
         togglePlaylistMenu: function() {
             
-            ///Route to the playlist controller
-            this.transitionToRoute("playlists");
-            
             ///Toggle css classes to open playlist menu
             $('#playlistToggle').toggleClass('open');
 		    $('#wrapper').toggleClass('toggled');
@@ -81,7 +78,6 @@ App.PlaylistsController = Ember.ArrayController.extend({
         }
     }
 });
-
 App.PlaylistController = Ember.ObjectController.extend({
     isEditing: false,
     actions: {
@@ -89,7 +85,7 @@ App.PlaylistController = Ember.ObjectController.extend({
             // Edit action is triggered - causes input element to be rendered after 'isEditing' is set.
             this.set('isEditing', true);
             window.console.log("Editing playlist title...");
-		},
+        },
         doneEditing: function() {
             window.console.log("Done editing playlist title...");
             this.set('isEditing', false);
@@ -100,13 +96,6 @@ App.PlaylistController = Ember.ObjectController.extend({
             });
         }
     }
-});
-App.SongModalController = Ember.ObjectController.extend({
-  actions: {
-    save: function() {
-      alert("Save is not yet implemented...");
-    }
-  }
 });
 
 App.RegisterController = Ember.ObjectController.extend({
@@ -130,19 +119,16 @@ App.RegisterController = Ember.ObjectController.extend({
                     window.console.log("New user created: " + user.get('accessToken'));
                     self.set("session.authToken", user.get("accessToken"));
                     self.set("session.authUserId", user.get("id"));
-                    
-                    ///TODO:  this styling differently
-                    $(".ember-application").css({ "background-color": '#fff'});
                     self.transitionToRoute("playlists");
                 });
             } else {
                 window.console.log("ERROR: There are missing fields in the registration form!");   
             }
-        },
-        
-        reset: function() {
+        },     
+        reset: function() {	
             ///TODO: Clear all fields
-            alert("Not implemented - Clearing form...");
+			document.getElementById("registration").reset();
+			//var newData = self.setProperties("name" = null, "email" = null, "username" = null, "password" = null);	
         }
     }
 });
@@ -184,8 +170,6 @@ App.LoginController = Ember.Controller.extend({
                             attemptedTransition.retry();
                             self.session.set('attemptedTransition', null);
                         } else {
-                            ///TODO:  this styling differently
-                            $(".ember-application").css({ "background-color": '#fff'});
                             self.transitionToRoute('playlists');
                         }
                     },
@@ -221,7 +205,7 @@ App.LoginController = Ember.Controller.extend({
 
 App.SessionDestroyController = Ember.Controller.extend({
     logout: function() {
-        ///This removes our sessesion and triggers the removal of cookies as well
+        ///This removes our session and triggers the removal of cookies as well
         window.console.log("Logging out...");
         this.session.setProperties({
             authToken:  '',
