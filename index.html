@@ -112,10 +112,11 @@
                     </span>
                 </div>
 
-                <div id="content">
-                    <i class="glyphicon glyphicon-headphones glyphicon-3x"></i><br/>
-                    VertMusic
-                </div>
+                {{#if 'isLanding'}}
+                    <div id="logo-container">
+                        <i class="glyphicon glyphicon-headphones"></i>VertMusic
+                    </div>
+                {{/if}}
                 {{outlet}}
         
             </div>

@@ -11,7 +11,8 @@ App.ApplicationController = Ember.Controller.extend({
     
     isLanding: (function() {
         var current = this.get("currentRouteName");
-        return (current == "index" || current == "playlists");
+        window.console.log("Current route: " + current);
+        return (current == "index" || current == "playlists.index");
     }).property("currentRouteName"),
     
     actions : {

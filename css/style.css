@@ -20,45 +20,52 @@
 
 /* Input Element style as h1 element for inline editing */
 .editable-field {
-      border: 1px solid #fff;
-      border-radius: 4px;
-      margin: 10px 0px 0px 0px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    margin: 10px 0px 0px 0px;
 }
 h1.edit input {
-      height: 1.3em;
-      width: 100%;
-      box-sizing: border-box;
-      font-size: inherit;
-      border: 1px solid #ccc;
-      box-shadow: 0 1px 3px #e8e8e8 inset;
-      margin-bottom: 0px;
+    height: 1.3em;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: inherit;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 3px #e8e8e8 inset;
+    margin-bottom: 0px;
 }
 .editable-field:hover {
-      margin-right: -2px;
-      padding-right: 2px;
-      border-color: #ccc;
-      box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      -webkit-transition: box-shadow 150ms ease-in 0ms;
-      transition: box-shadow 150ms ease-in 0ms;
+    margin-right: -2px;
+    padding-right: 2px;
+    border-color: #ccc;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -webkit-transition: box-shadow 150ms ease-in 0ms;
+    transition: box-shadow 150ms ease-in 0ms;
 }
 .edit .save-options {
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
-      border-radius: 0 0 3px 3px;
-      box-shadow: 0 3px 6px rgba(111,111,111,0.2);
-      padding: 0px 5px 5px 5px;
-      z-index: 1;
-      position: absolute;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 3px 6px rgba(111,111,111,0.2);
+    padding: 0px 5px 5px 5px;
+    z-index: 1;
+    position: absolute;
 }
 
 /** Landing Page **/
 #logo-container {
+    margin-top: 170px;
     font-size: 70px;
     color: rgb(158, 202, 59);
     font-weight: bold;
     font-variant: small-caps;
     text-align: center;   
+}
+
+#logo-container i.glyphicon {
+    font-size: 52px;
+    color: #000;
+    margin-right: 15px;
 }
     
