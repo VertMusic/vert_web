@@ -247,6 +247,13 @@
 			transition: width .2s ease-in;
 
 }
+
+.panel-group .panel .panel-collapse.collapse.in a.list-group-item#adding-playlist:hover:before,
+.panel-group .panel .panel-collapse.collapse.in a.list-group-item#add-playlist:hover:before {
+    width: 3px;
+    transition: none;
+}
+
 .panel-group .panel .panel-collapse.collapse.in a.list-group-item:hover:before {
 	width: 100%;
 	-webkit-transition: width .2s ease-in;
@@ -258,6 +265,26 @@
 .panel-group .panel .panel-collapse.collapse.in a.list-group-item.highlight {
 	font-weight: bold;
 	color: #fff;
+}
+
+.panel-group .panel .panel-collapse.collapse.in a.list-group-item input {
+   
+}
+
+#add-playlist {
+    cursor: pointer;
+}
+#add-playlist:hover {
+    color: rgb(158, 202, 59);
+    font-weight: bold;
+}
+
+#adding-playlist input {
+    width: 100%;
+    border-radius: 6px;
+    height: 34px;
+    font-size: 14pt;
+    color: initial; 
 }
 
 /***************************/

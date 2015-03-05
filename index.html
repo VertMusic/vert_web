@@ -23,7 +23,7 @@
   <script type="text/x-handlebars">
     {{outlet 'modal'}}
     {{#if session.isAuthenticated}}
-        <div id="wrapper">
+        <div id="wrapper" class="toggled">
             <!-- bar at top of page -->
             <nav id="top-menu" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <p class="navbar-text navbar-right">Signed in as <a href="javascript:void(0);" class="navbar-link">{{session.authUser.name}}</a></p>
@@ -70,7 +70,9 @@
             <!-- left menu -->
             <nav id="playlistMenu" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div id="sidebar-brand">
-                    <a href="#"><i class="glyphicon glyphicon-headphones glyphicon-3x"></i>Playlists</a>
+                    {{#link-to 'playlists'}}
+                        <i class="glyphicon glyphicon-headphones glyphicon-3x"></i>Playlists
+                    {{/link-to}}
                 </div>
                 <div class="panel-group sidebar-content" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
@@ -94,22 +96,26 @@
                         </div>
                         <div id="collapsePublic" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingPublic">
                             <div class="list-group">
-                                <a class="list-group-item">Item 2.1</a>
-                                <a class="list-group-item">Item 2.2</a>
-                                <a class="list-group-item">Item 2.3</a>
+                                <a class="list-group-item">Stub Item 1</a>
+                                <a class="list-group-item">Stub Item 2</a>
+                                <a class="list-group-item">Stub Item 3</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </nav>
             <div id="page-content-wrapper">
-                <div id="playlistToggle" class="navbar-toggler animate" data-toggle="offcanvas" {{action 'togglePlaylistMenu'}}>
+                <div id="playlistToggle" class="navbar-toggler animate open" data-toggle="offcanvas" {{action 'togglePlaylistMenu'}}>
                     <span class="menu-icon">
                         <i class="glyphicon glyphicon-headphones glyphicon-3x"></i>
                         <i class="glyphicon glyphicon-remove glyphicon-3x"></i>
                     </span>
                 </div>
 
+                <div id="content">
+                    <i class="glyphicon glyphicon-headphones glyphicon-3x"></i><br/>
+                    VertMusic
+                </div>
                 {{outlet}}
         
             </div>
@@ -179,8 +185,15 @@
         {{/link-to}}
     {{/each}}           
     {{#if isAdding}}
-        {{focus-input type="text" value=playlistName action="saveNew"}}
-        <button class="btn btn-primary" {{action "saveNew"}}>Add</button>
+        <a id="adding-playlist" class="list-group-item">
+            {{focus-input type="text" value=playlistName action="saveNew"}}
+            <div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default btn-xs" {{action "saveNew"}}>Add</button>
+                    <button type="button" class="btn btn-default btn-xs" {{action "cancelNew"}}>Cancel</button>
+                </div>
+            </div>
+        </a>
     {{else}}
         <a id="add-playlist" class="list-group-item" {{action "addNew"}}><i class="glyphicon glyphicon-plus"></i> Add Playlist</a>
     {{/if}}
@@ -198,7 +211,13 @@
         {{#if isEditing}}
           <h1 class="edit">
             {{focus-input type="text" value=name action="doneEditing"}}
-            <button class="btn btn-primary float-right" {{action 'doneEditing'}}>Done</button>
+            <!--button class="btn btn-primary float-right">Done</button-->
+              <div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default btn-xs" {{action 'doneEditing'}}>Done</button>
+                    <button type="button" class="btn btn-default btn-xs" {{action 'cancelEditing'}}>Cancel</button>
+                </div>
+            </div>
           </h1>
         {{else}}
           <h1 {{action 'edit'}} class="editable-field" title="Click to edit">{{name}}</h1>
@@ -216,6 +235,14 @@
           </thead>
           <tbody>
             <!-- TODO: Place handlebars templating for song data here -->
+            {{#each songs}}
+              <tr>
+                <td>{{title}}</td>  
+                <td>{{artist}}</td>
+                <td>{{duration}}</td>
+                <td>{{id}}</td>
+              </tr>  
+            {{/each}}
             <tr>
 				<td colspan="4">
 					<a id="add-playlist" {{action 'showModal' 'song-modal' model}}>+ Add Song</a>
@@ -228,12 +255,13 @@
       
   <script type="text/x-handlebars" data-template-name="song-modal">
 	{{#my-modal title='Adding a Song' ok='save' close='removeModal' }}
-		<form {{action 'ok' on='submit' target=view}}>
-			<div class="form-group">
-				<label>SELECT YOUR SONG:</label>
-				{{input class="form-control" value=song}}		
-			</div>
-		</form>
+		<form id="data" action="http://192.168.56.101:8080/vert/file/song" method="POST" enctype="multipart/form-data">
+            <label>Artist</label><input type="text" name="artist" /><br/>
+            <label>Title</label><input type="text" name="title" /><br/>
+            <label>Playlist</label><input type="text" name="playlist" /><br/>
+            <label>File</label><input name="file" type="file" /><br/>
+            <button type="submit">Submit</button>
+        </form>
 	{{/my-modal}}
   </script>	
       

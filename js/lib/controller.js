@@ -9,6 +9,11 @@ App.ApplicationController = Ember.Controller.extend({
         return this.get("currentRouteName") == "index";
     }).property("currentRouteName"),
     
+    isLanding: (function() {
+        var current = this.get("currentRouteName");
+        return (current == "index" || current == "playlists");
+    }).property("currentRouteName"),
+    
     actions : {
         toggleOptionsMenu: function() {            
             ///Toggle css class to open or close options menu
@@ -17,10 +22,14 @@ App.ApplicationController = Ember.Controller.extend({
             ///Close options menu when option is clicked
             $('#optionsMenu a').on('click', function() { 
                 $('#optionsMenu .navbar-toggler').trigger('click'); 
+                
+                ///Toggle css classes to close playlist menu
+                $('#playlistToggle').removeClass('open');
+                $('#wrapper').removeClass('toggled');
             });
         },
         togglePlaylistMenu: function() {
-            
+                        
             ///Toggle css classes to open playlist menu
             $('#playlistToggle').toggleClass('open');
 		    $('#wrapper').toggleClass('toggled');
@@ -31,6 +40,10 @@ App.ApplicationController = Ember.Controller.extend({
                 $('.list-group-item').removeClass('highlight');
                 $(this).addClass('highlight');
             });
+            
+            if ($('#playlistToggle').hasClass('open')) {
+                this.transitionToRoute("playlists");
+            }
         }
     }
 });
@@ -42,6 +55,10 @@ App.PlaylistsController = Ember.ArrayController.extend({
             // 'Add Playlist' is triggered
             window.console.log("Adding new playlist...");
             this.set('isAdding', true);
+        },
+        cancelNew: function() {
+            this.set('isAdding', false);
+            this.set("playlistName","");
         },
         saveNew: function() {
             var self = this;
@@ -61,7 +78,9 @@ App.PlaylistsController = Ember.ArrayController.extend({
             var playlist = this.store.createRecord("playlist", {
                 name: playlistName,
                 author: this.session.get("authUser.username"),
-                date: dateString
+                date: dateString,
+                visibility: "private",
+                likes: 0
             });
             
             ///Clear DOM field
@@ -80,11 +99,18 @@ App.PlaylistsController = Ember.ArrayController.extend({
 });
 App.PlaylistController = Ember.ObjectController.extend({
     isEditing: false,
+    oldValue: "",
+    
     actions: {
         edit: function() {
             // Edit action is triggered - causes input element to be rendered after 'isEditing' is set.
+            oldValue = this.get('name');
             this.set('isEditing', true);
             window.console.log("Editing playlist title...");
+        },
+        cancelEditing: function() {
+            this.set('name', oldValue);
+            this.set('isEditing', false);
         },
         doneEditing: function() {
             window.console.log("Done editing playlist title...");

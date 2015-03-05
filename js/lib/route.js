@@ -78,7 +78,7 @@ App.PlaylistsRoute =  App.AuthenticatedRoute.extend({
     },
     renderTemplate: function() {
         this.render({ outlet: 'playlists' });
-      }
+    }
 });
 
 /** Can't access a sepcific playlist until authenticated **/

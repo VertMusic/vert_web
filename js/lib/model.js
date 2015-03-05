@@ -6,15 +6,18 @@
 App.Playlist = DS.Model.extend({
     name: DS.attr("string"),
     author: DS.attr("string"),
-    date: DS.attr("string")
+    date: DS.attr("string"),
+    visibility: DS.attr("string"),
+    likes: DS.attr("number"),
+    songs: DS.hasMany("song", {async: true})
 });
 
 /** Song: Holds information regarding a song **/
 App.Song = DS.Model.extend({
     title: DS.attr("string"),
     artist: DS.attr("string"),
-    playlistId: DS.attr("string"),
-    filename: DS.attr("string")
+    duration: DS.attr("string"),
+    playlistId: DS.belongsTo("playlist", {async: true})
 });
 
 /** User: Hold informtation regarding a user of our application **/
