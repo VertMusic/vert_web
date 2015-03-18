@@ -100,6 +100,7 @@ App.PlaylistsController = Ember.ArrayController.extend({
 });
 App.PlaylistController = Ember.ObjectController.extend({
     isEditing: false,
+    isAddingSong: false,
     oldValue: "",
     
     actions: {
@@ -121,6 +122,56 @@ App.PlaylistController = Ember.ObjectController.extend({
             this.model.save().then(function(playlist){
                 window.console.log("Playlist updated");
             });
+        },
+        addSong: function() {
+            this.set('isAddingSong', true);
+        },
+        cancelAddSong: function() {
+            this.set('isAddingSong', false);   
+        },
+        submitSongData: function() {
+            var self = this;
+            
+            var data = self.getProperties("songTitle", "songArtist");
+            if(!Ember.isEmpty(data.songTitle) && !Ember.isEmpty(data.songArtist)) {
+                
+                var fileElement = $('.songFile')[0];
+                var file = fileElement.files[0];
+                window.console.log("FileElement: " + fileElement);
+                window.console.log("File: " + file);
+                alert("submitting song... to playlist: " + self.get("id") + " song:" + self.get("songTitle") + " - " + this.get("songArtist") + "  filename" + file);
+                
+                
+                //var formElement = $("#newSongData");
+                //var formData = new FormData(formElement);
+                var formData = new FormData();
+                formData.append("playlistId", self.get("id"));
+                formData.append("title", data.songTitle);
+                formData.append("artist", data.songArtist);
+                formData.append("file", file);
+                formData.append("filename", file.name);
+
+                var hash = {};
+                hash.type = "POST";
+                hash.url = "http://192.168.56.101:8080/vert/file/song";
+                hash.headers = { authorization: self.get("session.authToken")};
+                hash.data = formData;
+                hash.processData = false; //Prevent data from being turned into a string
+                hash.contentType = false; //Ensures the boundary flag is added
+
+                $.ajax(hash).then(
+                    function(success){
+                        window.console.log("Song add success - server response to song add: " + success);
+                        self.store.push('song', success.song);
+                        self.set('isAddingSong', false);
+                    },
+                    function(failure) {
+                        window.console.log("Song add error...");
+                        self.set('isAddingSong', false);
+                    });
+            } else {
+                window.console.log("Song add error - song title or artist is missing...");   
+            }
         }
     }
 });

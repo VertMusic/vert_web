@@ -224,6 +224,19 @@
           <h1 {{action 'edit'}} class="editable-field" title="Click to edit">{{name}}</h1>
         {{/if}}
         <h4 class="playlist-subheading">by {{author}}<small class="muted">&nbsp;({{format-date date}})</small></h4>
+        
+        {{#if isAddingSong}}
+          <form id="newSongData" enctype="multipart/form-data">
+            <label>Artist</label>{{input type="text" valueBinding="songArtist"}}<br/>
+            <label>Title</label>{{input type="text" valueBinding="songTitle"}}<br/>
+            <label>File</label>{{input class="songFile" type="file" valueBinding="songFile"}}<br/>
+            <button {{action 'submitSongData'}}>Submit</button>
+            <button {{action 'cancelAddSong'}}>Cancel</button>
+          </form>
+        {{else}}
+          <a id="add-song" {{action 'addSong'}}>+ Add Song</a>
+        {{/if}}
+        
       <hr/>
         <table class="table table-striped">
           <thead>
@@ -245,9 +258,9 @@
               </tr>  
             {{/each}}
             <tr>
-				<td colspan="4">
-					<a id="add-playlist" {{action 'showModal' 'song-modal' model}}>+ Add Song</a>
-				</td>
+				<!--td colspan="4">
+					<a id="add-song" {{action 'showModal' 'song-modal' model}}>+ Add Song</a>
+				</td-->
 			</tr>
           </tbody>
         </table>
