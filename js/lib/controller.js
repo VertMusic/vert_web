@@ -134,12 +134,23 @@ App.PlaylistController = Ember.ObjectController.extend({
             });
         },
         playSong: function(id) {
-            var audioElm =  document.getElementById("audio-player"); //$('#audio-player');
-            var playButton = document.getElementById(id);
+            var audioContainer =  document.getElementById("audio-player-container"); //$('#audio-player');
+            var audioPlayer = document.getElementById("audio-player");
+            var audioSongTitle = document.getElementById("audio-player-title");
+            var audioSongArtist = document.getElementById("audio-player-artist");
             
-            audioElm.src = "http://192.168.56.101:8080/vert/file/song/" + id;
-            audioElm.play();
-            playButton.className = "glyphicon glyphicon-pause";
+            var songRow = document.getElementById(id);
+            var songRowPlay = songRow.getElementsByClassName("play")[0];
+            var songRowArtist = songRow.getElementsByClassName("song-artist")[0];
+            var songRowTitle = songRow.getElementsByClassName("song-title")[0];
+            
+            audioSongTitle.innerHTML = songRowTitle.innerHTML;
+            audioSongArtist.innerHTML = songRowArtist.innerHTML;
+            
+            audioPlayer.src = "http://192.168.56.101:8080/vert/file/song/" + id;
+            audioPlayer.play();
+            songRowPlay.className = "glyphicon glyphicon-pause";
+            
             this.set("currentSong", id);
         },
         addSong: function() {

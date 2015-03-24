@@ -116,6 +116,9 @@
                           <source src="">
                           Your browser does not support the audio element.
                         </audio>
+                        <span id="audio-player-song-info">
+                            <span id="audio-player-title">Title</span> - <span id="audio-player-artist">Artist</span>
+                        </span>
                     </span>
                 </div>
 
@@ -255,22 +258,16 @@
             </tr>  
           </thead>
           <tbody>
-            <!-- TODO: Place handlebars templating for song data here -->
             {{#each songs}}
-              <tr>
-                <td>{{title}}</td>  
-                <td>{{artist}}</td>
-                <td>{{duration}}</td>
+              <tr {{bindAttr id="this.id"}}>
+                <td class="song-title">{{title}}</td>  
+                <td class="song-artist">{{artist}}</td>
+                <td class="song-duration">{{duration}}</td>
                 <td>
-                  <button class="play-song-button" {{action "playSong" id}}><span {{bindAttr id="this.id"}} class="glyphicon glyphicon-play"></span></button>
+                  <button class="play-song-button" {{action "playSong" id}}><span class="play glyphicon glyphicon-play"></span></button>
                 </td>
               </tr>  
             {{/each}}
-            <tr>
-				<!--td colspan="4">
-					<a id="add-song" {{action 'showModal' 'song-modal' model}}>+ Add Song</a>
-				</td-->
-			</tr>
           </tbody>
         </table>
     </div> 

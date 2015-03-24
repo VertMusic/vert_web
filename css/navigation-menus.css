@@ -46,6 +46,17 @@
     }
 }
 
+#audio-player-song-info {
+    position: static;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    top: 5px;
+    left: 310px;
+    width: 350px;
+    position: absolute;   
+}
+
 /******************************/
 /*   SIDEBAR - MENU TOGGLER   */
 /******************************/
