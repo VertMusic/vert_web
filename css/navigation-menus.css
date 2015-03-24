@@ -88,6 +88,17 @@
 	z-index: 10000;
 	cursor: pointer;
 }
+
+.navbar-audio-player {
+  top: 15px;
+  position: fixed;
+  left: 80px;
+  z-index: 10000;   
+}
+.navbar-audio-player.open {
+  left: 300px;   
+}
+
 .navbar-toggler > span {
 	color: #fff;
 	-webkit-transition: -webkit-transform .3s ease-out 0s;
@@ -95,6 +106,7 @@
 	-o-transition: -moz-transform .3s ease-out 0s;
 	-ms-transition: -ms-transform .3s ease-out 0s;
 	transition: transform .3s ease-out 0s;
+    
 	-webkit-transform: rotate(0deg);
 	-moz-transform: rotate(0deg);
 	-o-transform: rotate(0deg);

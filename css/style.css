@@ -68,4 +68,13 @@ h1.edit input {
     color: #000;
     margin-right: 15px;
 }
+
+.play-song-button {
+   border-radius: 6px;   
+}
+.play-song-button:hover {
+    color: #fff;
+    border-color: rgb(158, 202, 59);
+}
+
     

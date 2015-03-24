@@ -14,8 +14,7 @@
   <link rel="stylesheet" href="css/style.css">
   
 </head>
-<body>   
- 
+<body>
 <!--***********************************************************************************************************************************************************
                                                              MAIN APPLICATION/PAGE TEMPLATE
 *************************************************************************************************************************************************************-->
@@ -105,10 +104,18 @@
                 </div>
             </nav>
             <div id="page-content-wrapper">
-                <div id="playlistToggle" class="navbar-toggler animate open" data-toggle="offcanvas" {{action 'togglePlaylistMenu'}}>
-                    <span class="menu-icon">
-                        <i class="glyphicon glyphicon-headphones glyphicon-3x"></i>
-                        <i class="glyphicon glyphicon-remove glyphicon-3x"></i>
+                <div>
+                    <div id="playlistToggle" class="navbar-toggler animate open" data-toggle="offcanvas" {{action 'togglePlaylistMenu'}}>
+                        <span class="menu-icon">
+                            <i class="glyphicon glyphicon-headphones glyphicon-3x"></i>
+                            <i class="glyphicon glyphicon-remove glyphicon-3x"></i>
+                        </span>
+                    </div>
+                    <span class="navbar-audio-player animate open" id="audio-player-container">
+                        <audio controls name="media"  id="audio-player">
+                          <source src="">
+                          Your browser does not support the audio element.
+                        </audio>
                     </span>
                 </div>
 
@@ -254,7 +261,9 @@
                 <td>{{title}}</td>  
                 <td>{{artist}}</td>
                 <td>{{duration}}</td>
-                <td>{{id}}</td>
+                <td>
+                  <button class="play-song-button" {{action "playSong" id}}><span {{bindAttr id="this.id"}} class="glyphicon glyphicon-play"></span></button>
+                </td>
               </tr>  
             {{/each}}
             <tr>

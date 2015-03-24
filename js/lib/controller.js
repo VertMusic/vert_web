@@ -34,6 +34,7 @@ App.ApplicationController = Ember.Controller.extend({
             ///Toggle css classes to open playlist menu
             $('#playlistToggle').toggleClass('open');
 		    $('#wrapper').toggleClass('toggled');
+            $('#audio-player-container').toggleClass('open');
             
             ///Set listener on meu items for select: 
             ///TODO can be removed after adding {{#link-to}}, then alse change '.higlight' to '.active' in css file
@@ -102,6 +103,15 @@ App.PlaylistController = Ember.ObjectController.extend({
     isEditing: false,
     isAddingSong: false,
     oldValue: "",
+    currentSong: "",
+    
+    init: function() {
+        this._super();
+        if (this.get("currentSong") != "") {
+            var playButton = document.getElementById(this.get("currentSong"));
+            playButton.className = "glyphicon glyphicon-pause";
+        }
+    },
     
     actions: {
         edit: function() {
@@ -123,8 +133,18 @@ App.PlaylistController = Ember.ObjectController.extend({
                 window.console.log("Playlist updated");
             });
         },
+        playSong: function(id) {
+            var audioElm =  document.getElementById("audio-player"); //$('#audio-player');
+            var playButton = document.getElementById(id);
+            
+            audioElm.src = "http://192.168.56.101:8080/vert/file/song/" + id;
+            audioElm.play();
+            playButton.className = "glyphicon glyphicon-pause";
+            this.set("currentSong", id);
+        },
         addSong: function() {
-            this.set('isAddingSong', true);
+            var self = this;
+            self.set('isAddingSong', true);
         },
         cancelAddSong: function() {
             this.set('isAddingSong', false);   
@@ -139,8 +159,6 @@ App.PlaylistController = Ember.ObjectController.extend({
                 var file = fileElement.files[0];
                 window.console.log("FileElement: " + fileElement);
                 window.console.log("File: " + file);
-                alert("submitting song... to playlist: " + self.get("id") + " song:" + self.get("songTitle") + " - " + this.get("songArtist") + "  filename" + file);
-                
                 
                 //var formElement = $("#newSongData");
                 //var formData = new FormData(formElement);
