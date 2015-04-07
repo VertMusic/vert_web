@@ -3,6 +3,10 @@
 /********************************************************************************/
 
 App.ApplicationController = Ember.Controller.extend({
+    songUrl: "http://192.168.56.101:8080/vert/file/song/",
+    currentSong: "",
+    currentSongIndex: null,
+    currentPlaylist: [],
     
     isIndex: (function() {
         window.console.log("Current route: "+this.get("currentRouteName"));
@@ -105,13 +109,7 @@ App.PlaylistController = Ember.ObjectController.extend({
     oldValue: "",
     currentSong: "",
     
-    init: function() {
-        this._super();
-        if (this.get("currentSong") != "") {
-            var playButton = document.getElementById(this.get("currentSong"));
-            playButton.className = "glyphicon glyphicon-pause";
-        }
-    },
+    needs: ['application'],
     
     actions: {
         edit: function() {
@@ -144,14 +142,75 @@ App.PlaylistController = Ember.ObjectController.extend({
             var songRowArtist = songRow.getElementsByClassName("song-artist")[0];
             var songRowTitle = songRow.getElementsByClassName("song-title")[0];
             
-            audioSongTitle.innerHTML = songRowTitle.innerHTML;
-            audioSongArtist.innerHTML = songRowArtist.innerHTML;
+            if (songRowPlay.classList.contains("glyphicon-play")) {
+                /// It is the play icon, so play the song
+                if (this.get("controllers.application.currentSong") != id) {
+                    /// Start new song
+                    window.console.log("Starting new song: " + this.get("controllers.application.currentSong") + " != " + id);
+                    
+                    this.set("controllers.application.currentSong", id);
+                    
+                    /// Create a new playlist of continous songs if it is a song from a different playlist than that is currently being played
+                    var containsID = false;
+                    for (var i=0; i < this.get("controllers.application.currentPlaylist").length; i++) {
+                        if (this.get("controllers.application.currentPlaylist")[i].id == id) {
+                            containsID = true;   
+                        }
+                    }
+                    
+                    var currentSongIndex;
+                    if (!containsID) {
+                        window.console.log("Making playlist...");
+                        /// Generate playlist based from current song being played
+                        var allPlaylistSongs = document.getElementsByClassName("song");
+ 
+                        for (var i=0, el; el = allPlaylistSongs[i]; i++) {
+                            window.console.log(i + ": " + el.id);
+                            if (el.id == id) {
+                                currentSongIndex = i;
+                            }
+                            var song = { "id": el.id,
+                                         "url": this.get("controllers.application.songUrl") + el.id,
+                                         "title": document.getElementById(el.id).getElementsByClassName("song-title")[0].innerHTML,
+                                         "artist": document.getElementById(el.id).getElementsByClassName("song-artist")[0].innerHTML
+                                       };
+                            this.get("controllers.application.currentPlaylist").push(song);
+                        }                   
+                        
+                    } else {
+                        /// Set the current index, so when the song ends the ApplicationView can set thenext song in the list
+                        for (var i=0, song; song = this.get("controllers.application.currentPlaylist")[i]; i++) {
+                            if (song.id == id) {
+                                currentSongIndex = i;
+                                break;
+                            }
+                        } 
+                    }
+                    
+                    
+                    window.console.log("Current: " + currentSongIndex);
+                    this.set("controllers.application.currentSongIndex", currentSongIndex);
+                    
+                    //JSON.stringify(this.get("controllers.application.currentPlaylist"))
+                    window.console.log(this.get("controllers.application.currentPlaylist"));
+                    
+                    /// Setup new song in player
+                    audioSongTitle.innerHTML = songRowTitle.innerHTML;
+                    audioSongArtist.innerHTML = songRowArtist.innerHTML;
+                    audioPlayer.src = this.get("controllers.application.songUrl") + id;
+                    
+                } else {
+                    /// Continue old paused song
+                    window.console.log("Continue pause song: " + id);
+                }
+                audioPlayer.play();
+            } else {
+                /// It is the pause icon, so pause the current song
+                audioPlayer.pause();
+            }
             
-            audioPlayer.src = "http://192.168.56.101:8080/vert/file/song/" + id;
-            audioPlayer.play();
-            songRowPlay.className = "glyphicon glyphicon-pause";
-            
-            this.set("currentSong", id);
+            songRowPlay.classList.toggle("glyphicon-play");
+            songRowPlay.classList.toggle("glyphicon-pause");
         },
         addSong: function() {
             var self = this;

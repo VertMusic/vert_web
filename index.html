@@ -261,7 +261,7 @@
           </thead>
           <tbody>
             {{#each songs}}
-              <tr {{bindAttr id="this.id"}}>
+              <tr class="song" {{bind-attr id="this.id"}}>
                 <td class="song-title">{{title}}</td>  
                 <td class="song-artist">{{artist}}</td>
                 <td class="song-duration">{{duration}}</td>
@@ -419,6 +419,7 @@
   <script src="js/lib/controller.js"></script>
   <script src="js/lib/model.js"></script>
   <script src="js/lib/component.js"></script>
+  <script src="js/lib/view.js"></script>
   
 </body>
 </html>

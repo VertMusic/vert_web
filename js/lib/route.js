@@ -87,6 +87,12 @@ App.PlaylistRoute =  App.AuthenticatedRoute.extend({
         /// Returns server data associated with specific "playlist_id"        
         /// Makes GET request to: <host><namespace>/playlists/<id>
         return this.store.find("playlist", params.playlist_id);
+    }, 
+    
+    actions: {
+        didTransition: function() {
+            window.console.log("route transition....");   
+        }
     }
 });
 
