@@ -328,6 +328,13 @@
 *************************************************************************************************************************************************************-->
   
   <script type="text/x-handlebars" id="register">
+      <div class="alert-container col-sm-5 center">
+        {{#if registrationFailed}}
+            <div class="alert alert-danger" role="alert">
+              <strong>Warning!</strong> Username already exists!
+            </div>
+        {{/if}}
+    </div>
       <div class="form-wrapper col-sm-5 center">
         <p class="form-title"> Register</p>
         <form id="registration" class="login" {{action 'createUser' this on="submit"}}>            
