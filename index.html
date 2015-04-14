@@ -329,9 +329,14 @@
   
   <script type="text/x-handlebars" id="register">
       <div class="alert-container col-sm-5 center">
-        {{#if registrationFailed}}
+        {{#if usernameFailed}}
             <div class="alert alert-danger" role="alert">
               <strong>Warning!</strong> Username already exists!
+            </div>
+        {{/if}}
+        {{#if completionFailed}}
+            <div class="alert alert-danger" role="alert">
+              <strong>Warning!</strong> Please complete missing fields before submission!
             </div>
         {{/if}}
     </div>
