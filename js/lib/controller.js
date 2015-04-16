@@ -271,6 +271,7 @@ App.RegisterController = Ember.ObjectController.extend({
     password: null,
     usernameFailed: false,
     completionFailed: false,
+    buttonsDisabled: false,
     
     actions: {
         createUser: function() {
@@ -284,6 +285,8 @@ App.RegisterController = Ember.ObjectController.extend({
                && !Ember.isEmpty(data.email)) {
                 self.set("completionFailed", false);
                 self.set("usernameFailed", false);
+                self.set("buttonsDisabled", true);
+                
                 /// POST new user data to server
                 var user = this.store.createRecord('user', data);
                 user.save().then(function(success) {
@@ -292,18 +295,24 @@ App.RegisterController = Ember.ObjectController.extend({
                     self.set("session.authToken", user.get("accessToken"));
                     self.set("session.authUserId", user.get("id"));
                     self.transitionToRoute("playlists");
+                    self.set("buttonsDisabled", false);
                 }, function(failure) {
                     // Failure
                     window.console.log("Registration error...");
                     self.set("usernameFailed", true);
+                    self.set("buttonsDisabled", false);
                 });
             } else {
                 window.console.log("ERROR: There are missing fields in the registration form!");
                 self.set("completionFailed", true);
                 self.set("usernameFailed", false);
             }
-        },     
+        },
+        
         reset: function() {	
+            this.set("usernameFailed", false);
+            this.set("completionFailed", false);
+            
             ///Clear all registration fields
 			this.setProperties({
                 "name":"", 
