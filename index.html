@@ -370,6 +370,24 @@
         </form>
     </div>
   </script>
+      
+<!--***********************************************************************************************************************************************************
+                                                                        ACTIVATE PAGE TEMPLATE
+*************************************************************************************************************************************************************-->
+  <script type="text/x-handlebars" id="activate">
+    <div class="form-wrapper col-sm-5 center">
+        <p class="form-title"> Welcome <span>{{model.name}}</span>!</p>
+        <p> 
+            You have successfully activate your VertMusic account. Don't forget to download the VertMusic app from
+            the Apple or Google Play Store. 
+            <br/><br/>
+            Now that your account is active you can login and start creating your very own playlist to share with the 
+            VertMusic community.
+        </p>
+        <button {{action 'toLogin'}} class="btn btn-default">Take me to login!</button>
+    </div>      
+  </script>
+      
 
 <!--***********************************************************************************************************************************************************
                                                                         LOGIN PAGE TEMPLATE
@@ -379,7 +397,7 @@
     <div class="alert-container col-sm-5 center">
         {{#if loginFailed}}
             <div class="alert alert-danger" role="alert">
-              <strong>Warning!</strong> Incorrect Username or Password!
+              <strong>Warning!</strong> {{errorMessage}}
             </div>
         {{/if}}
     </div>

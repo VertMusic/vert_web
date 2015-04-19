@@ -292,9 +292,7 @@ App.RegisterController = Ember.ObjectController.extend({
                 user.save().then(function(success) {
                     // Success
                     window.console.log("New user created: " + user.get('accessToken'));
-                    self.set("session.authToken", user.get("accessToken"));
-                    self.set("session.authUserId", user.get("id"));
-                    self.transitionToRoute("playlists");
+                    self.transitionToRoute("login");
                     self.set("buttonsDisabled", false);
                 }, function(failure) {
                     // Failure
@@ -328,6 +326,7 @@ App.LoginController = Ember.Controller.extend({
     password: null,
     remember: true,
     loginFailed: false,
+    errorMessage: "There is an error with your login",
     
     actions: {
         login: function() {
@@ -365,8 +364,14 @@ App.LoginController = Ember.Controller.extend({
                     },
                     function(failure) {
                         /// Show warning that information is incorrect
-                        window.console.log("Login error - Unauthorized access!");
+                        window.console.log("Login error - Unauthorized access! fail: " + JSON.stringify(failure));
                         self.send('reset');
+                        
+                        if (failure.status == 401) {
+                            self.set("errorMessage", "Incorrect Username or Password!");
+                        } else if (failure.status == 409) {
+                            self.set("errorMessage", "Check your email to activate your account!");
+                        }
                         self.set("loginFailed", true);
                     });
             } else {
@@ -389,6 +394,14 @@ App.LoginController = Ember.Controller.extend({
                 remember: true
             });
             this.set('loginFailed', false);
+        }
+    }
+});
+
+App.ActivateController = Ember.Controller.extend({    
+    actions: {
+        toLogin: function() {
+            this.transitionToRoute('login');
         }
     }
 });
