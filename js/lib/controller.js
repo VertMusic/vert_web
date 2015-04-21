@@ -106,6 +106,7 @@ App.PlaylistsController = Ember.ArrayController.extend({
 App.PlaylistController = Ember.ObjectController.extend({
     isEditing: false,
     isAddingSong: false,
+    isSubmitting: false,
     oldValue: "",
     currentSong: "",
     
@@ -187,7 +188,6 @@ App.PlaylistController = Ember.ObjectController.extend({
                         } 
                     }
                     
-                    
                     window.console.log("Current: " + currentSongIndex);
                     this.set("controllers.application.currentSongIndex", currentSongIndex);
                     
@@ -215,6 +215,7 @@ App.PlaylistController = Ember.ObjectController.extend({
         addSong: function() {
             var self = this;
             self.set('isAddingSong', true);
+            window.console.log("Click add song...");
         },
         cancelAddSong: function() {
             this.set('isAddingSong', false);   
@@ -225,13 +226,13 @@ App.PlaylistController = Ember.ObjectController.extend({
             var data = self.getProperties("songTitle", "songArtist");
             if(!Ember.isEmpty(data.songTitle) && !Ember.isEmpty(data.songArtist)) {
                 
+                self.set("isSubmitting", true);
+                
                 var fileElement = $('.songFile')[0];
                 var file = fileElement.files[0];
                 window.console.log("FileElement: " + fileElement);
                 window.console.log("File: " + file);
                 
-                //var formElement = $("#newSongData");
-                //var formData = new FormData(formElement);
                 var formData = new FormData();
                 formData.append("playlistId", self.get("id"));
                 formData.append("title", data.songTitle);
@@ -252,10 +253,18 @@ App.PlaylistController = Ember.ObjectController.extend({
                         window.console.log("Song add success - server response to song add: " + success);
                         self.store.push('song', success.song);
                         self.set('isAddingSong', false);
+                        self.setProperties({
+                            songTitle: '',
+                            songArtist: ''
+                        });
                     },
                     function(failure) {
                         window.console.log("Song add error...");
                         self.set('isAddingSong', false);
+                        self.setProperties({
+                            songTitle: '',
+                            songArtist: ''
+                        });
                     });
             } else {
                 window.console.log("Song add error - song title or artist is missing...");   

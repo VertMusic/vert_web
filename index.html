@@ -248,9 +248,14 @@
           <form id="newSongData" enctype="multipart/form-data">
             <label>Artist</label>{{input type="text" valueBinding="songArtist"}}<br/>
             <label>Title</label>{{input type="text" valueBinding="songTitle"}}<br/>
-            <label>File</label>{{input class="songFile" type="file" valueBinding="songFile"}}<br/>
-            <button {{action 'submitSongData'}}>Submit</button>
-            <button {{action 'cancelAddSong'}}>Cancel</button>
+            <label>File</label>{{input class="songFile" type="file"}}<br/>
+              {{#if isSubmitting}}
+                <button disabled="true"><i class="fa fa-spinner fa-pulse"></i></button>
+                <button disabled="true">Cancel</button>              
+              {{else}}
+                <button {{action 'submitSongData'}}>Submit</button>
+                <button {{action 'cancelAddSong'}}>Cancel</button>
+              {{/if}}
           </form>
         {{else}}
           <a id="add-song" {{action 'addSong'}}>+ Add Song</a>
