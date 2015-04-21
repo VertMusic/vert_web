@@ -29,6 +29,14 @@ App.User = DS.Model.extend({
     accessToken: DS.attr("string")
 });
 
+App.Activate = DS.Model.extend({
+    // 'id' is the activation code
+    accessToken: DS.attr("string"),
+    name: DS.attr("string"),
+    username: DS.attr("string"),
+    userId: DS.attr("string")
+});
+
 /** Session: An object to hold the current user and their authentication token **/
 App.Session = Ember.Object.extend({
     authToken: null,
