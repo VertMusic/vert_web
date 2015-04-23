@@ -257,6 +257,7 @@ App.PlaylistController = Ember.ObjectController.extend({
                             songTitle: '',
                             songArtist: ''
                         });
+                        self.set("isSubmitting", false);
                     },
                     function(failure) {
                         window.console.log("Song add error...");
@@ -265,6 +266,7 @@ App.PlaylistController = Ember.ObjectController.extend({
                             songTitle: '',
                             songArtist: ''
                         });
+                        self.set("isSubmitting", false);
                     });
             } else {
                 window.console.log("Song add error - song title or artist is missing...");   
