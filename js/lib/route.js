@@ -123,7 +123,10 @@ App.RegisterRoute = Ember.Route.extend({
         this.render('register', {
               outlet: 'notAuth'
         });
-    }
+    }, 
+    deactivate: function() {
+    this.controllerFor('register').send('reset');
+  }
 });
 
 /** You can login without being authenticated **/

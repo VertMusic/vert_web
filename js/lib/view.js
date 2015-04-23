@@ -67,3 +67,9 @@ App.PlaylistView = Ember.View.extend({
         }
     }
 });
+App.RegistrationView = Ember.View.extend({
+    afterRenderEvent: function() {        
+        window.console.log("something");
+       this.controller.registrationComplete = false;
+    }
+});

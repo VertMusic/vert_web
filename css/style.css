@@ -77,4 +77,6 @@ h1.edit input {
     border-color: rgb(158, 202, 59);
 }
 
-    
+.lead{
+    text-align:left;
+}

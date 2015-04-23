@@ -265,14 +265,16 @@ App.PlaylistController = Ember.ObjectController.extend({
 });
 
 App.RegisterController = Ember.ObjectController.extend({
-    name: null,
+    name: null, 
     email: null,
     username: null,
     password: null,
     usernameFailed: false,
     completionFailed: false,
     buttonsDisabled: false,
-    
+    registrationComplete: false, // Registration Variable to notify user when account is created
+
+
     actions: {
         createUser: function() {
             var self = this;
@@ -292,7 +294,9 @@ App.RegisterController = Ember.ObjectController.extend({
                 user.save().then(function(success) {
                     // Success
                     window.console.log("New user created: " + user.get('accessToken'));
-                    self.transitionToRoute("login");
+
+                        self.set("registrationComplete",true);
+                    // Disable Register 
                     self.set("buttonsDisabled", false);
                 }, function(failure) {
                     // Failure
@@ -310,7 +314,7 @@ App.RegisterController = Ember.ObjectController.extend({
         reset: function() {	
             this.set("usernameFailed", false);
             this.set("completionFailed", false);
-            
+            this.set("registrationComplete",false);
             ///Clear all registration fields
 			this.setProperties({
                 "name":"", 

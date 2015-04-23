@@ -184,9 +184,17 @@
             <p class="lead">
                 Upload your favorite songs from your computer and listen to them from anywhere you want. <br/>In addition, get access to thousands of public playlists created by others.
             </p>
+            <p>
+                <a href="https://play.google.com/store/music?hl=en" title="VertMusic in Google Play Store">
+                    <img src="/image/google-play.svg" width="40%" style="margin-right:5px;"/> 
+                </a>
+                <a href="https://itunes.apple.com/us/genre/ios-music/id6011?mt=8" title="VertMusic in Apple App Store">
+                    <img src="/image/app-store.png" width="40%"/>
+                </a>
+            </p>
             </div>
             <div style="clear:both;width:100%">
-            <p class="lead">
+            <p>
                 {{#link-to 'register' class="btn btn-lg btn-default"}} Sign up for free! {{/link-to}}
             </p>
             </div>
@@ -344,6 +352,11 @@
         {{#if completionFailed}}
             <div class="alert alert-danger" role="alert">
               <strong>Warning!</strong> Please complete missing fields before submission!
+            </div>
+        {{/if}}
+        {{#if registrationComplete}}
+            <div class="alert alert-success" role="alert">
+              <strong>Account Created!</strong> Check your email to activate your account!
             </div>
         {{/if}}
     </div>
