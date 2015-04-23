@@ -351,7 +351,7 @@ App.LoginController = Ember.Controller.extend({
                 var postData = { session: { username: data.username, password: data.password } };
                 
                 var hash = {};
-                hash.url = self.get("constants.ip") + "/vert/data/session";
+                hash.url = this.get("constants.ip") + "/vert/data/session";
                 hash.type = "POST";
                 hash.dataType = 'json';
                 hash.contentType = 'application/json; charset=utf-8';
