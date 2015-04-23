@@ -3,7 +3,9 @@
 /********************************************************************************/
 
 App.ApplicationController = Ember.Controller.extend({
-    songUrl: "http://192.168.56.101:8080/vert/file/song/",
+    songUrl: (function() {
+        return this.get("constants.ip") + "/vert/file/song/";
+    }).property("constants.ip"),
     currentSong: "",
     currentSongIndex: null,
     currentPlaylist: [],
@@ -242,7 +244,7 @@ App.PlaylistController = Ember.ObjectController.extend({
 
                 var hash = {};
                 hash.type = "POST";
-                hash.url = "http://192.168.56.101:8080/vert/file/song";
+                hash.url = self.get("constants.ip") + "/vert/file/song";
                 hash.headers = { authorization: self.get("session.authToken")};
                 hash.data = formData;
                 hash.processData = false; //Prevent data from being turned into a string
@@ -349,7 +351,7 @@ App.LoginController = Ember.Controller.extend({
                 var postData = { session: { username: data.username, password: data.password } };
                 
                 var hash = {};
-                hash.url = "http://192.168.56.101:8080/vert/data/session";
+                hash.url = self.get("constants.ip") + "/vert/data/session";
                 hash.type = "POST";
                 hash.dataType = 'json';
                 hash.contentType = 'application/json; charset=utf-8';
