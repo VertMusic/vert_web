@@ -1,6 +1,8 @@
 /** Adapter for REST calls to the backend used by the Ember Data Store **/
 App.ApplicationAdapter = DS.RESTAdapter.extend({
-    host: "http://192.168.56.101:8080",
+    host: (function() {
+        return this.get("constants.ip");
+    }).property("constants.ip"),
     namespace: "vert/data",
     headers: function() {
       return {

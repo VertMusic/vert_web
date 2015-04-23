@@ -37,6 +37,11 @@ App.Activate = DS.Model.extend({
     userId: DS.attr("string")
 });
 
+/** Constants: places values here that are repeated in the application **/
+App.Constants = Ember.Object.extend({
+    ip: "http://192.168.56.101:8080"
+});
+
 /** Session: An object to hold the current user and their authentication token **/
 App.Session = Ember.Object.extend({
     authToken: null,

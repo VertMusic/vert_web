@@ -28,3 +28,21 @@ App.initializer({
         application.inject('data-adapter', 'session', 'session:current');
     }
 });
+
+/** Initializes the IP of our server to be available to controllers, routes, components, and adapters **/
+App.initializer({
+    name: 'constants',
+    before: 'ember-data',
+    
+    initialize: function(container, application) {        
+        /// Singleton=true so we only have one instance, instatantiate=false because we already call create() above
+        application.register('constants:current', App.Constants);
+        
+        application.inject('controller', 'constants', 'constants:current');
+        application.inject('route', 'constants', 'constants:current');
+        application.inject('component', 'constants', 'constants:current');
+        application.inject('adapter', 'constants', 'constants:current');
+        application.inject('adapter:-rest', 'constants', 'constants:current');
+        application.inject('data-adapter', 'constants', 'constants:current');
+    }
+});
