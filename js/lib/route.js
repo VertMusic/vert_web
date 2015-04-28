@@ -5,6 +5,7 @@ App.Router.map(function () {
 
     this.resource("about");
     this.resource("login");
+	this.resource("sett");
     
     /// TODO: eventually created a nested resource and combine with 'login' (This may cause 'action' issue in controller, so holding off)
     this.resource("session", function(){

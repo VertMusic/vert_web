@@ -44,10 +44,11 @@
                             <i class="fa fa-user fa-3x"></i>
                         </a>
                     </li>
-                    <li id="settings">
-                        <a href="javascript:void(0);" class="animate">
+                    <li id="sett">
+						{{#link-to 'sett' class="animate"}}
                             <span class="desc animate"> Settings </span>
                             <i class="fa fa-cog fa-3x"></i>
+						{{/link-to}}
                         </a>
                     </li>
                     <li id="about">
@@ -334,7 +335,7 @@
   <script type="text/x-handlebars" id="about">
     <div class="container">
       <div class="row-fluid">
-        <p>
+        <p style= "font-size:30px;">
           Vert is a music storage and sharing platform. Upload songs and access them from anywhere on your computer 
           or mobile devices. Playlists can be marked private and will only be seen by you, or share your list of tunes 
           with the entire user community by making one public.
@@ -411,9 +412,40 @@
         </p>
         <button {{action 'toLogin'}} class="btn btn-default">Take me to login!</button>
     </div>      
-  </script>
-      
-
+  </script>     
+<!--***********************************************************************************************************************************************************
+                                                                       SETTINGS PAGE TEMPLATE
+*************************************************************************************************************************************************************-->
+  <script type = "text/x-handlebars" id = "sett">
+	 <div class="container">
+		<div class="row-fluid">
+			<p style = "font-size:40px; marginal-right: 50%; color: #66FF66;"> VERT SETTINGS (Coming Soon) </p>
+				<div class= "setts">
+					<ul style = "width:30%; float: left;">
+						<i class="fa fa-picture-o"></i><a>Add Photo </a><br><br>
+						<i class="fa fa-exchange"></i><a href>Change Password </a><br><br>
+						<i class="fa fa-soundcloud"></i><a href>Add Sound Effects </a><br><br>
+						<i class="fa fa-star-half-o"></i><a href>View Ratings </a><br><br>
+						<i class="fa fa-list"></i><a href>Complete List of Songs Added </a><br><br>
+					</ul>
+					<ul style = "width:30%; float: left;">
+						<i class="fa fa-ban"></i><a>Mute </a><br><br>
+						<i class="fa fa-question"></i><a>Need Help? </a><br><br>
+						<i class="fa fa-wrench"></i><a>Tutorial </a><br><br>
+						<i class="fa fa-exclamation-triangle"></i><a>Troubleshoot </a><br><br>
+						<i class="fa fa-tags"></i><a>Edit Profile </a><br><br>
+					</ul>
+					<ul style = "width:30%; float: left;">
+						<i class="fa fa-paint-brush"></i><a href>Change Background Colour </a><br><br>
+						<i class="fa fa-eye"></i><a href>Show/Hide Toolbar </a><br><br>
+						<i class="fa fa-backward"></i><a href>Back to Homepage </a><br><br>
+						<i class="fa fa-sign-out"></i><a href>Exit VertMusic </a><br><br>
+						<i class="fa fa-info-circle"></i><a href>About Us </a><br><br>		
+					</ul>
+				</div>
+			</div>
+		</div>
+	</script> 
 <!--***********************************************************************************************************************************************************
                                                                         LOGIN PAGE TEMPLATE
 *************************************************************************************************************************************************************-->
@@ -449,18 +481,14 @@
             </div>
         </form>
     </div>      
-  </script>
-      
+  </script>     
   <script type="text/x-handlebars" data-template-name="forgot-modal">
-    {{#my-modal title='Forgot your Password? No Worries!' ok='Send' close='removeModal' }}
-        <form {{action 'forgot' on='submit' target=view}}>
-            <div class="form-group">
-                <label>Enter your email:</label>
-                    {{input class="form-control" value=email}}		
-            </div>
+	{{#my-modal title='Forgot Password'}}
+		<form>
+            <label>Email: </label><input type="text"/>
         </form>
-    {{/my-modal}}
-  </script>	
+	{{/my-modal}}
+  </script>
 <!--***********************************************************************************************************************************************************
                                                                    LIBRARIES/FILES
 *************************************************************************************************************************************************************-->  

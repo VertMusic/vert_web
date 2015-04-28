@@ -398,12 +398,6 @@ App.LoginController = Ember.Controller.extend({
                 self.set("loginFailed", true);
             }
         },
-        
-        forgotPassword: function() {
-            ///TODO: Send password to user's email account
-            alert("Not implemented - Sending password to your email...");
-        },
-        
         reset: function() {
             this.setProperties({
                 password: "",
